@@ -4,7 +4,7 @@ A small, generic reference implementation of **SQL Server CDC -> lake (dbt) -> e
 
 It shows how to take the change stream of a SQL Server database, turn it into an event store and current state in a lakehouse
 with [dbt](https://www.getdbt.com/), and replicate it back to a SQL Server **exactly once**, with any SQL engine that speaks the
-Trino protocol (Trino itself, or [CodeLake](https://github.com/fernandomarcius/CodeLake)).
+Trino protocol (Trino itself, or [CodeLake](https://github.com/fernandomarcius/codelake-engine)).
 
 The example domain is a toy: `customers` and `orders`, multi-tenant through a configurable tenant column (`tenant_id` by default).
 
