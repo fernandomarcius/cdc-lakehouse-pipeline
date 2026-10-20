@@ -1,0 +1,18 @@
+# Tables handled by the sink. `lake` is the table in <ENGINE_CATALOG>.<ENGINE_SCHEMA>; `target` is dbo.<target> in SQL Server.
+#
+# The tenant column must exist in the lake table and in the target table of every event_store entry.
+# It must match the dbt var `tenant_key` (dbt/dbt_project.yml).
+tenant_key: tenant_id
+
+# Optional fixed list of tenants. When omitted, tenants are discovered from the lake when seeding.
+# A tenant that appears later has no checkpoint and is skipped (with a warning) until you run `seed` again.
+# tenants: [1, 2]
+
+# Append-only: new events since the checkpoint, per tenant, exactly once.
+event_store:
+  - {lake: customers, target: Customers}
+  - {lake: orders, target: Orders}
+
+# Full replacement: DELETE + INSERT in one transaction, only when the lake returns at least one row.
+snapshot:
+  - {lake: customers_snapshot, target: CustomersSnapshot}

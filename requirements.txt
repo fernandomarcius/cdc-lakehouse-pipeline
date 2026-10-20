@@ -1,0 +1,5 @@
+python-tds==1.17.1
+trino==0.340.0
+pyOpenSSL==26.4.0
+cryptography==50.0.2
+PyYAML==6.0.3

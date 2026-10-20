@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: customers_events
+    description: Insert-only event store of customers rebuilt from CDC.
+    columns:
+      - name: event_id
+        data_tests: [unique, not_null]
+      - name: operation
+        data_tests:
+          - accepted_values:
+              values: [1, 2, 4]
+  - name: orders_events
+    description: Insert-only event store of orders rebuilt from CDC.
+    columns:
+      - name: event_id
+        data_tests: [unique, not_null]

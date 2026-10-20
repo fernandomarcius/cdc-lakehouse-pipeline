@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest==9.1.1
+dbt-core==1.8.10
+dbt-trino==1.8.5
+dbt-adapters==1.16.3

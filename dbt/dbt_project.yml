@@ -1,0 +1,31 @@
+name: cdc_lakehouse
+version: "0.1.0"
+config-version: 2
+profile: cdc_lakehouse
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  # Column that identifies the tenant in every source table. Change it to match your schema
+  # (for example `account_id` or `company_id`); the models and the sink read it from here.
+  tenant_key: tenant_id
+  # Catalog that holds the lake tables (any Hive/Iceberg catalog of the SQL engine).
+  lake_catalog: "{{ env_var('LAKE_CATALOG', 'lake') }}"
+  # Catalog of the Trino connector that reads the SQL Server CDC change tables.
+  source_catalog: "{{ env_var('SOURCE_CATALOG', 'sqlserver') }}"
+
+models:
+  cdc_lakehouse:
+    +materialized: view
+    raw:
+      +materialized: incremental
+      +incremental_strategy: append
+      +on_schema_change: append_new_columns
+      +schema: raw
+    current:
+      +schema: current
+    streaming:
+      +schema: streaming

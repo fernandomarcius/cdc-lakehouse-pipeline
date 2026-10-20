@@ -1,0 +1,15 @@
+# Example profile. Works with any engine that speaks the Trino protocol (Trino, CodeLake, ...).
+# `dbt parse` does not open a connection; `dbt run` does.
+cdc_lakehouse:
+  target: engine
+  outputs:
+    engine:
+      type: trino
+      method: none
+      user: "{{ env_var('ENGINE_USER', 'dbt') }}"
+      host: "{{ env_var('ENGINE_HOST', '127.0.0.1') }}"
+      port: "{{ env_var('ENGINE_PORT', '8080') | int }}"
+      http_scheme: http
+      database: "{{ env_var('LAKE_CATALOG', 'lake') }}"
+      schema: raw
+      threads: 4

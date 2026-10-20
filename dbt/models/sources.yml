@@ -1,0 +1,13 @@
+version: 2
+
+# SQL Server with CDC enabled, exposed to the engine through a SQL Server connector catalog.
+# Each `*_ct` table is the CDC change table of a capture instance (dbo_<table>_CT in the `cdc` schema).
+sources:
+  - name: appdb
+    database: "{{ var('source_catalog') }}"
+    schema: cdc
+    tables:
+      - name: dbo_customers_ct
+      - name: dbo_orders_ct
+      # maps each LSN to its commit time (cdc.lsn_time_mapping, created by SQL Server when CDC is enabled)
+      - name: lsn_time_mapping

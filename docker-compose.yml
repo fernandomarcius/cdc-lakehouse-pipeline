@@ -1,0 +1,9 @@
+# Runs the sink worker only. The engine (any Trino-protocol endpoint) and SQL Server are yours: point the variables at them.
+#   cp .env.example .env && docker compose up --build
+services:
+  sink:
+    build: .
+    env_file: .env
+    ports: ["8080:8080"]
+    volumes:
+      - ./sink/tables.yaml:/app/sink/tables.yaml:ro
